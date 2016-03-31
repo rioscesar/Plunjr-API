@@ -27,9 +27,9 @@ class RestroomsAPI(Resource):
                     }
                 )
             else:
-                abort(app.config['NOT_FOUND'], message=app.config['REVIEW_NOT_FOUND'])
+                abort(app.config['NOT_FOUND'], message=app.config['RESTROOM_NOT_FOUND'])
         except(DataError, NoResultFound):
-            abort(app.config['NOT_FOUND'], message=app.config['REVIEW_NOT_FOUND'])
+            abort(app.config['NOT_FOUND'], message=app.config['RESTROOM_NOT_FOUND'])
 
         pass
 
@@ -59,6 +59,6 @@ class RestroomAPI(Resource):
             if restroom:
                 return RestroomSchema().dump(restroom).data
             else:
-                abort(app.config['NOT_FOUND'], message=app.config['REVIEW_NOT_FOUND'])
+                abort(app.config['NOT_FOUND'], message=app.config['RESTROOM_NOT_FOUND'])
         except(DataError, NoResultFound):
-            abort(app.config['NOT_FOUND'], message=app.config['REVIEW_NOT_FOUND'])
+            abort(app.config['NOT_FOUND'], message=app.config['RESTROOM_NOT_FOUND'])
