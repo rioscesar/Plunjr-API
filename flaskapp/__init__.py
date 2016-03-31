@@ -14,5 +14,8 @@ api_bp = Blueprint('api', __name__, url_prefix='/api')
 api = Api(api_bp)
 
 # routes go here
+from flaskapp.main.resources.review import ReviewsAPI, ReviewAPI
+api.add_resource(ReviewsAPI, '/reviews', '/reviews/')
+api.add_resource(ReviewAPI, '/reviews/<id>', 'reviews/<id>/')
 
 app.register_blueprint(api_bp)
