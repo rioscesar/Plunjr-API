@@ -11,4 +11,4 @@ class HelloWorld(Resource):
     """Test Call"""
 
     def get(self):
-        return jsonify('Hello World')
+        return 'Hello World'
