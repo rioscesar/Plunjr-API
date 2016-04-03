@@ -5,7 +5,7 @@ from flask_marshmallow import Marshmallow
 
 
 app = Flask(__name__)
-app.config.from_envvar('CONFIG_PATH')
+app.config.from_pyfile('../config.py')
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
