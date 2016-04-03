@@ -31,8 +31,6 @@ class RestroomsAPI(Resource):
         except(DataError, NoResultFound):
             abort(app.config['NOT_FOUND'], message=app.config['RESTROOM_NOT_FOUND'])
 
-        pass
-
     def post(self):
         discussion, errors = RestroomSchema().load(request.json)
 

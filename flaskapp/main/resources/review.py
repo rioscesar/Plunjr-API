@@ -31,8 +31,6 @@ class ReviewsAPI(Resource):
         except(DataError, NoResultFound):
             abort(app.config['NOT_FOUND'], message=app.config['REVIEW_NOT_FOUND'])
 
-        pass
-
     def post(self, restroom_id):
         discussion, errors = ReviewSchema().load(request.json)
 
