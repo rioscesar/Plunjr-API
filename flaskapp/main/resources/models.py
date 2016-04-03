@@ -8,7 +8,7 @@ class Restroom(db.Model):
 
     __tablename__ = 'restrooms'
 
-    id = db.Column(db.Integer)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     address = db.Column(db.String)
 
@@ -22,7 +22,7 @@ class Review(db.Model):
 
     __tablename__ = 'reviews'
 
-    id = db.Column(db.Integer)
+    id = db.Column(db.Integer, primary_key=True)
     rating = db.Column(db.Integer)
     description = db.Column(db.String)
     date = db.Column(db.DateTime)
