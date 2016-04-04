@@ -13,9 +13,9 @@ class ReviewsAPI(Resource):
 
     def get(self, restroom_id):
         try:
-            q = Review.query
+            q = Review.query.filter_by(restroom_id=restroom_id)
 
-            reviews = q.filter_by(restroom_id=restroom_id).all()
+            reviews = q.all()
             count = q.count()
 
             if reviews:
