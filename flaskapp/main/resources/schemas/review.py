@@ -12,5 +12,7 @@ class ReviewSchema(Schema):
     description = fields.String()
     date = fields.DateTime()
     images = fields.String()
+    title = fields.String()
+    user = fields.String()
 
     uri = ma.URLFor('.reviewapi', id='<id>')

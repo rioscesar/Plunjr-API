@@ -59,5 +59,7 @@ class Review(db.Model):
     description = db.Column(db.String)
     date = db.Column(db.DateTime)
     images = db.Column(db.String)
+    title = db.Column(db.String)
+    user = db.Column(db.String)
 
     restroom_id = db.Column(db.Integer, db.ForeignKey('restrooms.id'))

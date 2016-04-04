@@ -1,6 +1,16 @@
-id,rating,description,date,images,restroom_id
-1,4,Bring your own TP,01/01/2016,,1
-2,3,No Toilet Paper,02/02/2016,,1
-3,5,The best experience I've ever had,02/05/2016,,2
-4,2,Where do I start!? The restrrom was a...,01/18/2016,,3
-5,4.3,Everything went fine,,,1
+id,rating,description,date,images,restroom_id,title,user
+1,4,Bring your own TP,01/01/2016,,1,Default Generic Title,Rosalinda
+2,3,No Toilet Paper,02/02/2016,,1,Default Generic Title,Rosalinda
+3,5,The best experience I've ever had,02/05/2016,,2,Default Generic Title,Rosalinda
+4,2,Where do I start!? The restrrom was a...,01/18/2016,,3,Default Generic Title,Rosalinda
+5,4.3,Everything went fine,,,1,Default Generic Title,Rosalinda
+6,4,Bring your own TP,01/01/2016,,1,Default Generic Title,Rosalinda
+7,3,No Toilet Paper,02/02/2016,,1,Default Generic Title,Rosalinda
+8,4,Bring your own TP,01/01/2016,,1,Default Generic Title,Rosalinda
+9,3,No Toilet Paper,02/02/2016,,1,Default Generic Title,Rosalinda
+10,4,Bring your own TP,01/01/2016,,1,Default Generic Title,Rosalinda
+11,3,No Toilet Paper,02/02/2016,,1,Default Generic Title,Rosalinda
+12,4,Bring your own TP,01/01/2016,,1,Default Generic Title,Rosalinda
+13,3,No Toilet Paper,02/02/2016,,1,Default Generic Title,Rosalinda
+14,4,Bring your own TP,01/01/2016,,1,Default Generic Title,Rosalinda
+15,3,No Toilet Paper,02/02/2016,,1,Default Generic Title,Rosalinda
