@@ -40,7 +40,7 @@ class Review(db.Model):
     __tablename__ = 'reviews'
 
     id = db.Column(db.Integer, primary_key=True)
-    rating = db.Column(db.Integer)
+    rating = db.Column(db.Float)
     description = db.Column(db.String)
     date = db.Column(db.DateTime)
     images = db.Column(db.String)

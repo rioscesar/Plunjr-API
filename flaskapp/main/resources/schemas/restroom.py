@@ -11,7 +11,7 @@ class RestroomSchema(Schema):
     id = fields.Integer()
     name = fields.String()
     address = fields.String()
-    averageRating = fields.Integer(attribute='average_rating')
+    averageRating = fields.Float(attribute='average_rating')
 
     # this is actually a nested class
     reviews = fields.List(fields.Nested(ReviewSchema))
