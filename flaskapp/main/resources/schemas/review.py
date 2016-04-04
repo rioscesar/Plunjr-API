@@ -8,7 +8,7 @@ class ReviewSchema(Schema):
     """
 
     id = fields.Integer()
-    rating = fields.Integer()
+    rating = fields.Float()
     description = fields.String()
     date = fields.DateTime()
     images = fields.String()

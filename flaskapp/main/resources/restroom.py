@@ -16,16 +16,9 @@ class RestroomsAPI(Resource):
             q = Restroom.query
 
             restrooms = q.all()
-            count = q.count()
 
             if restrooms:
-                restrooms = RestroomSchema(many=True).dump(restrooms).data
-                return jsonify(
-                    {
-                        'count': count,
-                        'results': restrooms
-                    }
-                )
+                return RestroomSchema(many=True).dump(restrooms).data
             else:
                 abort(app.config['NOT_FOUND'], message=app.config['RESTROOM_NOT_FOUND'])
         except(DataError, NoResultFound):

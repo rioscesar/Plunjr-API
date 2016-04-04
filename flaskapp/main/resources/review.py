@@ -16,16 +16,9 @@ class ReviewsAPI(Resource):
             q = Review.query.filter_by(restroom_id=restroom_id)
 
             reviews = q.all()
-            count = q.count()
 
             if reviews:
-                reviews = ReviewSchema(many=True).dump(reviews).data
-                return jsonify(
-                    {
-                        'count': count,
-                        'results': reviews
-                    }
-                )
+                return ReviewSchema(many=True).dump(reviews).data
             else:
                 abort(app.config['NOT_FOUND'], message=app.config['REVIEW_NOT_FOUND'])
         except(DataError, NoResultFound):

@@ -31,6 +31,21 @@ class Restroom(db.Model):
 
         return avg_rating
 
+    @property
+    def review_count(self):
+        count = 0
+
+        count_in_db = db.session.query(
+            func.count(Review.id)
+        ).filter_by(
+            restroom_id=self.id
+        ).one()[0]
+
+        if count_in_db:
+            count = count_in_db
+
+        return count
+
 
 class Review(db.Model):
     """
