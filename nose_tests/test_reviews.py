@@ -33,12 +33,31 @@ class ReviewAPITest(NDTestCase):
 
         self.assertEqual(reponse_dict, reponse_dict_cmp)
 
-    # def test_post_restroom(self):
-    #     get_uri = '{}/reviews?page=1&order=asc&pagesize=12'.format(app.config['BASE_URL'])
-    #     response = self.json_get(get_uri)
-    #
-    #     reponse_dict = self.dict_from_response(response)
-    #
-    #     self.assertEqual(response.status_code, app.config['OK'])
-    #
-    #     self.assertEqual(reponse_dict[0]['bio'], 'Rapper')
+    def test_post_review(self):
+        uri = '{}/reviews'.format(app.config['BASE_URL'])
+        payload = {
+            'address': 'Narnia Blvd',
+            'rating': 4.2,
+            'description': 'Very clean restroom!',
+            'title': 'Best Poop Ever!',
+            'user': 'Eduardo Johnson'
+        }
+        response = self.json_post(uri, payload, data_json=True)
+
+        reponse_dict = self.dict_from_response(response)
+
+        self.assertEqual(response.status_code, app.config['OK'])
+
+        uri = '{}/reviews'.format(app.config['BASE_URL'])
+        payload = {
+            'address': 'Narnia Blvd',
+            'rating': 4.2,
+            'description': 'Very clean restroom!',
+            'title': 'Best Poop Ever!',
+            'user': 'Eduardo Johnson'
+        }
+        response = self.json_post(uri, payload, data_json=True)
+
+        reponse_dict = self.dict_from_response(response)
+
+        self.assertEqual(response.status_code, app.config['OK'])

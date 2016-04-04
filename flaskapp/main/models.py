@@ -57,7 +57,7 @@ class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     rating = db.Column(db.Float)
     description = db.Column(db.String)
-    date = db.Column(db.DateTime)
+    date = db.Column(db.DateTime, server_default=func.now())
     images = db.Column(db.String)
     title = db.Column(db.String)
     user = db.Column(db.String)

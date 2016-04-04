@@ -22,6 +22,9 @@ from flaskapp.main.resources.review import ReviewsAPI, ReviewAPI
 api.add_resource(ReviewsAPI, '/restrooms/<restroom_id>/reviews', '/restrooms/<restroom_id>/reviews/')
 api.add_resource(ReviewAPI, '/reviews/<id>', 'reviews/<id>/')
 
+from flaskapp.main.resources.review import RestroomReviewAPI
+api.add_resource(RestroomReviewAPI, '/reviews', '/reviews/')
+
 from flaskapp.main.resources.hello import HelloWorld
 api.add_resource(HelloWorld, '/')
 

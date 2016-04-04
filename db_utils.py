@@ -1,8 +1,10 @@
 import csv
 import os
+
 from sqlalchemy.exc import SQLAlchemyError
+
 from flaskapp import db
-from flaskapp.main.resources.models import Review, Restroom
+from flaskapp.main.models import Review, Restroom
 
 
 def recreate_db():
@@ -71,8 +73,19 @@ def _seed_csv_restrooms():
         db.session.add(restroom)
 
 
-def seed_database_dev():
+def reset_postgres_id_sequences():
+    tables = ['reviews', 'restrooms']
+
+    for table in tables:
+        sql = "SELECT setval('{0}_id_seq', MAX(id)) FROM {0};".format(table)
+        db.engine.execute(sql)
+
+
+def seed_data():
+    # recreate_db()
     _seed_csv_reviews()
     _seed_csv_restrooms()
+
+    # reset_postgres_id_sequences()
 
     db.session.commit()

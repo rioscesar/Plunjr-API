@@ -33,12 +33,3 @@ class RestroomAPITest(NDTestCase):
 
         self.assertEqual(reponse_dict, reponse_dict_cmp)
 
-    # def test_post_restroom(self):
-    #     get_uri = '{}/restrooms?page=1&order=asc&pagesize=12'.format(app.config['BASE_URL'])
-    #     response = self.json_get(get_uri)
-    #
-    #     reponse_dict = self.dict_from_response(response)
-    #
-    #     self.assertEqual(response.status_code, app.config['OK'])
-    #
-    #     self.assertEqual(reponse_dict[0]['bio'], 'Rapper')

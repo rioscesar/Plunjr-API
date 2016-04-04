@@ -23,7 +23,7 @@ class SetupTests(object):
 
     def master_test_setup(self):
         self._create_temp_test_db()
-        db_utils.seed_database_dev()
+        #db_utils.seed_data()
 
         db.session.commit()
 

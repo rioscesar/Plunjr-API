@@ -1,15 +1,16 @@
-
 from flask import request, jsonify
 from flask_restful import Resource, abort
-from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import DataError
-from flaskapp.main.resources.models import Review
+from sqlalchemy.orm.exc import NoResultFound
+
 from flaskapp import app, db
+from flaskapp.main.models import Review, Restroom
+from flaskapp.main.resources.schemas.restroom import RestroomSchema
 from flaskapp.main.resources.schemas.review import ReviewSchema
 
 
 class ReviewsAPI(Resource):
-    """GET All Reviews or POST a review"""
+    """GET All Reviews"""
 
     def get(self, restroom_id):
         try:
@@ -26,22 +27,6 @@ class ReviewsAPI(Resource):
         except(DataError, NoResultFound):
             abort(app.config['NOT_FOUND'], message=app.config['REVIEW_NOT_FOUND'])
 
-    def post(self, restroom_id):
-        discussion, errors = ReviewSchema().load(request.json)
-
-        if errors:
-            abort(app.config['UNPROCESSABLE_ENTITY'], message=jsonify(errors))
-
-        db.session.add(discussion)
-        db.session.commit()
-
-        review_dump, errors = ReviewSchema().dump(discussion)
-
-        if errors:
-            abort(app.config['UNPROCESSABLE_ENTITY'], message=jsonify(errors))
-
-        return review_dump
-
 
 class ReviewAPI(Resource):
     """GET a specific Review"""
@@ -55,3 +40,60 @@ class ReviewAPI(Resource):
                 abort(app.config['NOT_FOUND'], message=app.config['REVIEW_NOT_FOUND'])
         except(DataError, NoResultFound):
             abort(app.config['NOT_FOUND'], message=app.config['REVIEW_NOT_FOUND'])
+
+
+class RestroomReviewAPI(Resource):
+    """Post a review or create a new restroom and review"""
+
+    def post(self):
+        # check if a restroom exists using the address and if it doesn't then create the restroom if it does
+        # then post a review to the corresponding restroom
+        address = request.json.pop('address')
+
+        try:
+            rr = Restroom.query.filter(Restroom.address==address).one()
+
+            request.json['restroomId'] = rr.id
+            review, errors = ReviewSchema().load(request.json)
+
+            if errors:
+                abort(app.config['UNPROCESSABLE_ENTITY'], message=jsonify(errors))
+
+            db.session.add(review)
+            db.session.commit()
+
+            review_dump, errors = ReviewSchema().dump(review)
+
+            if errors:
+                abort(app.config['UNPROCESSABLE_ENTITY'], message=jsonify(errors))
+
+            return review_dump
+        except NoResultFound:
+            rr, errors = RestroomSchema().load({'address': address})
+
+            if errors:
+                abort(app.config['UNPROCESSABLE_ENTITY'], message=jsonify(errors))
+
+            db.session.add(rr)
+            db.session.commit()
+
+            request.json['restroomId'] = rr.id
+            review, errors = ReviewSchema().load(request.json)
+
+            if errors:
+                abort(app.config['UNPROCESSABLE_ENTITY'], message=jsonify(errors))
+
+            db.session.add(review)
+            db.session.commit()
+
+            rr_dump, errors = RestroomSchema().dump(rr)
+
+            if errors:
+                abort(app.config['UNPROCESSABLE_ENTITY'], message=jsonify(errors))
+
+            return rr_dump
+
+
+
+
+
