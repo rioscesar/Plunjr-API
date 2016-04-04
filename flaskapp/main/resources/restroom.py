@@ -15,8 +15,8 @@ class RestroomsAPI(Resource):
         try:
             q = Restroom.query
 
-            count = q.count()
             restrooms = q.all()
+            count = q.count()
 
             if restrooms:
                 restrooms = RestroomSchema(many=True).dump(restrooms).data

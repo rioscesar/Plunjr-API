@@ -19,7 +19,7 @@ api.add_resource(RestroomsAPI, '/restrooms', '/restrooms/')
 api.add_resource(RestroomAPI, '/restrooms/<id>', 'restrooms/<id>/')
 
 from flaskapp.main.resources.review import ReviewsAPI, ReviewAPI
-api.add_resource(ReviewsAPI, '/restroom/<restroom_id>/reviews', '/restroom/<restroom_id>/reviews/')
+api.add_resource(ReviewsAPI, '/restrooms/<restroom_id>/reviews', '/restrooms/<restroom_id>/reviews/')
 api.add_resource(ReviewAPI, '/reviews/<id>', 'reviews/<id>/')
 
 from flaskapp.main.resources.hello import HelloWorld

@@ -15,8 +15,8 @@ class ReviewsAPI(Resource):
         try:
             q = Review.query
 
+            reviews = q.filter_by(restroom_id=restroom_id).all()
             count = q.count()
-            reviews = q.filter(restroom_id=restroom_id).all()
 
             if reviews:
                 reviews = ReviewSchema(many=True).dump(reviews).data

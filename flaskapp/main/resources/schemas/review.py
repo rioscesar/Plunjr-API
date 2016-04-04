@@ -8,11 +8,9 @@ class ReviewSchema(Schema):
     """
 
     id = fields.Integer()
-    address = fields.String()
     rating = fields.Integer()
     description = fields.String()
     date = fields.DateTime()
-    rr_name = fields.String()
     images = fields.String()
 
     uri = ma.URLFor('.reviewapi', id='<id>')
