@@ -49,6 +49,7 @@ class RestroomReviewAPI(Resource):
         # check if a restroom exists using the address and if it doesn't then create the restroom if it does
         # then post a review to the corresponding restroom
         address = request.json.pop('address')
+        name = request.json.pop('name')
 
         try:
             rr = Restroom.query.filter(Restroom.address==address).one()
@@ -69,7 +70,7 @@ class RestroomReviewAPI(Resource):
 
             return review_dump
         except NoResultFound:
-            rr, errors = RestroomSchema().load({'address': address})
+            rr, errors = RestroomSchema().load({'address': address, 'name': name})
 
             if errors:
                 abort(app.config['UNPROCESSABLE_ENTITY'], message=jsonify(errors))
