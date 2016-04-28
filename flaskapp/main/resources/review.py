@@ -1,5 +1,6 @@
 from flask import request, jsonify
 from flask_restful import Resource, abort
+from sqlalchemy import and_
 from sqlalchemy.exc import DataError
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -46,13 +47,16 @@ class RestroomReviewAPI(Resource):
     """Post a review or create a new restroom and review"""
 
     def post(self):
-        # check if a restroom exists using the address and if it doesn't then create the restroom if it does
+        # check if a restroom exists using the lat and lng and if it doesn't then create the restroom if it does
         # then post a review to the corresponding restroom
+        lat = request.json.pop('lat')
+        lng = request.json.pop('lng')
         address = request.json.pop('address')
+
         name = request.json.pop('name')
 
         try:
-            rr = Restroom.query.filter(Restroom.address==address).one()
+            rr = Restroom.query.filter(and_(Restroom.lat==lat, Restroom.lng==lng)).one()
 
             request.json['restroomId'] = rr.id
             review, errors = ReviewSchema().load(request.json)
@@ -70,7 +74,7 @@ class RestroomReviewAPI(Resource):
 
             return review_dump
         except NoResultFound:
-            rr, errors = RestroomSchema().load({'address': address, 'name': name})
+            rr, errors = RestroomSchema().load({'address': address, 'name': name, 'lat': lat, 'lng': lng})
 
             if errors:
                 abort(app.config['UNPROCESSABLE_ENTITY'], message=jsonify(errors))

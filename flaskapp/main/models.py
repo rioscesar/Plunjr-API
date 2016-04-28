@@ -13,6 +13,8 @@ class Restroom(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     address = db.Column(db.String)
+    lat = db.Column(db.Float)
+    lng = db.Column(db.Float)
 
     review = db.relationship('Review')
 
