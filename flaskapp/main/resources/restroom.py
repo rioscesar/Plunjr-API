@@ -19,11 +19,12 @@ class RestroomsAPI(Resource):
 
     def get(self):
         try:
+            print('inside restrooms api')
             args = self.reqparser.parse_args()
             lat = args['lat']
             lng = args['lng']
             radius = args['radius'] if args['radius'] is not None else 8046.72
-
+            print('got lat: ', lat, ', got lng: ', lng)
             q = Restroom.query
 
             q = self.get_restrooms_near_me(q, lat, lng, radius)
