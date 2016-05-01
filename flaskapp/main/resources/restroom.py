@@ -27,7 +27,7 @@ class RestroomsAPI(Resource):
             args = self.reqparser.parse_args()
             lat = args['lat']
             lng = args['lng']
-            radius = args['radius'] if args['radius'] is not None else 8046.72
+            radius = args['radius'] if args['radius'] is not None else 4000
 
             logger.info('lat is: {} and lng is: {} and radius is: {}'.format(lat, lng, radius))
 

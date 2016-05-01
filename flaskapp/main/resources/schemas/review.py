@@ -13,10 +13,10 @@ class ReviewSchema(Schema):
     id = fields.Integer()
     rating = fields.Float()
     description = fields.String()
-    date = fields.DateTime(allow_none=True)
+    date = fields.DateTime()
     images = fields.String(allow_none=True)
     title = fields.String()
-    user = fields.String()
+    user = fields.String(allow_none=True)
 
     restroomId = fields.Integer(attribute='restroom_id')
 
