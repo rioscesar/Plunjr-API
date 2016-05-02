@@ -37,7 +37,7 @@ def get_all_refugerestrooms():
                     'description': response['comment'],
                     'title': response['directions']
                 }
-                requests.post('http://104.130.132.153/api/reviews/', json=payload)
+                requests.post('http://127.0.0.1:8000/api/reviews/', json=payload)
         page += 1
 
 if __name__ == '__main__':

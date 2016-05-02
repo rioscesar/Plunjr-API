@@ -1,5 +1,5 @@
 from flask_restful import Resource, abort, reqparse
-from sqlalchemy import func
+from sqlalchemy import func, text
 from sqlalchemy.exc import DataError
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -27,7 +27,7 @@ class RestroomsAPI(Resource):
             args = self.reqparser.parse_args()
             lat = args['lat']
             lng = args['lng']
-            radius = args['radius'] if args['radius'] is not None else 4000
+            radius = args['radius'] if args['radius'] is not None else 5000
 
             logger.info('lat is: {} and lng is: {} and radius is: {}'.format(lat, lng, radius))
 
@@ -49,10 +49,10 @@ class RestroomsAPI(Resource):
     def get_restrooms_near_me(self, q, lat, lng, radius_in_meters):
         logger.info('GET_RESTROOMS_NEAR_ME')
 
-        where_am_i = func.ll_to_earth(lat, lng)
-        q = q.filter(func.earth_box(where_am_i, radius_in_meters)
-                     >=
-                     func.ll_to_earth(Restroom.lat, Restroom.lng))
+        sql = text('earth_box( ll_to_earth({}, {}), {}) @> ll_to_earth(restrooms.lat, restrooms.lng)'
+                   .format(lat, lng, radius_in_meters))
+
+        q = q.filter(sql)
         logger.info('About to return query from GET_RESTROOMS_NEAR_ME')
         return q
 
