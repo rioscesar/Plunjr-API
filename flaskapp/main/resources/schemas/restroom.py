@@ -18,6 +18,7 @@ class RestroomSchema(Schema):
     reviewCount = fields.Integer(attribute='review_count')
     lat = fields.Float()
     lng = fields.Float()
+    imagesUrl = fields.String(allow_none=True, attribute='images_url')
 
     # this is actually a nested class
     review = fields.List(fields.Nested(ReviewSchema))

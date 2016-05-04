@@ -33,9 +33,10 @@ def get_all_refugerestrooms():
                     'lng': response['longitude'],
                     'name': response['name'],
                     'address': response['street'] + ', ' + response['city'] + ', ' + response['state'],
-                    'rating': response['upvote'] if response['upvote'] < 5 else 3,
+                    'rating': response['upvote'] if 5 <= response['upvote'] >= 1 else 3,
                     'description': response['comment'],
-                    'title': response['directions']
+                    'title': response['directions'],
+                    'user': 'Anonymous'
                 }
                 requests.post('http://127.0.0.1:8000/api/reviews/', json=payload)
         page += 1

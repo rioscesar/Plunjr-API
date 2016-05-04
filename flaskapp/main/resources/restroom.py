@@ -1,3 +1,4 @@
+from flask import request
 from flask_restful import Resource, abort, reqparse
 from sqlalchemy import func, text
 from sqlalchemy.exc import DataError
@@ -57,6 +58,7 @@ class RestroomsAPI(Resource):
         return q
 
 
+
 class RestroomAPI(Resource):
     """GET a specific Restroom"""
 
@@ -67,5 +69,14 @@ class RestroomAPI(Resource):
                 return RestroomSchema().dump(restroom).data
             else:
                 abort(app.config['NOT_FOUND'], message=app.config['RESTROOM_NOT_FOUND'])
+        except(DataError, NoResultFound):
+            abort(app.config['NOT_FOUND'], message=app.config['RESTROOM_NOT_FOUND'])
+
+    def patch(self, id):
+        try:
+            rr = Restroom.query.get(id)
+            rr.images_url = request.json['imagesUrl']
+            db.session.commit()
+            return RestroomSchema().dump(rr).data
         except(DataError, NoResultFound):
             abort(app.config['NOT_FOUND'], message=app.config['RESTROOM_NOT_FOUND'])

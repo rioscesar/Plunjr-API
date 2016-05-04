@@ -17,6 +17,7 @@ class Restroom(db.Model):
     lng = db.Column(db.Float)
 
     review = db.relationship('Review')
+    images_url = db.Column(db.String)
 
     @property
     def average_rating(self):
@@ -60,7 +61,6 @@ class Review(db.Model):
     rating = db.Column(db.Float)
     description = db.Column(db.String)
     date = db.Column(db.DateTime, server_default=func.now())
-    images = db.Column(db.String)
     title = db.Column(db.String)
     user = db.Column(db.String)
 

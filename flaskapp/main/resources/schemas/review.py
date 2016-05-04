@@ -14,7 +14,6 @@ class ReviewSchema(Schema):
     rating = fields.Float()
     description = fields.String()
     date = fields.DateTime()
-    images = fields.String(allow_none=True)
     title = fields.String()
     user = fields.String(allow_none=True)
 
