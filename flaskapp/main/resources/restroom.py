@@ -74,8 +74,9 @@ class RestroomAPI(Resource):
 
     def patch(self, id):
         try:
-            rr = Restroom.query.get(id)
-            rr.images_url = request.json['imagesUrl']
+            request.json['id'] = id
+            rr = RestroomSchema(partial=True).load(request.json).data
+            db.session.add(rr)
             db.session.commit()
             return RestroomSchema().dump(rr).data
         except(DataError, NoResultFound):

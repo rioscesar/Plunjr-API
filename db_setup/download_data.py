@@ -16,6 +16,7 @@
 #     "upvote": 0,
 #     "country": "US"
 #   }
+import json
 
 import requests
 
@@ -27,7 +28,8 @@ def get_all_refugerestrooms():
         if not responses:
             break
         for response in responses:
-            if response['longitude'] and response['latitude']:
+            if response['longitude'] and response['latitude']\
+                    and response['street'] and response['city'] and response['state']:
                 payload = {
                     'lat': response['latitude'],
                     'lng': response['longitude'],
@@ -42,4 +44,9 @@ def get_all_refugerestrooms():
         page += 1
 
 if __name__ == '__main__':
-    get_all_refugerestrooms()
+    # get_all_refugerestrooms()
+    headers = {'content-type': 'application/json'}
+    payload = {
+        'imagesUrl': 'wwww.website.com'
+    }
+    requests.patch('http://127.0.0.1:8000/api/restrooms/1', data=json.dumps(payload), headers=headers)

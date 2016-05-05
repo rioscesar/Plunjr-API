@@ -31,7 +31,7 @@ class ReviewSchema(Schema):
         else:
             review = Review()
 
-        copy_keys = ['rating', 'description', 'images', 'title', 'user', 'restroom_id']
+        copy_keys = ['rating', 'description', 'title', 'user', 'restroom_id']
 
         copy_dict_values_to_object_attrs(copy_keys, item, review)
 

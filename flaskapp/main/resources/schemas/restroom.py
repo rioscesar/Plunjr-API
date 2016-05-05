@@ -35,7 +35,7 @@ class RestroomSchema(Schema):
         else:
             restroom = Restroom()
 
-        copy_keys = ['name', 'address', 'lat', 'lng']
+        copy_keys = ['name', 'address', 'lat', 'lng', 'images_url']
 
         copy_dict_values_to_object_attrs(copy_keys, item, restroom)
 
