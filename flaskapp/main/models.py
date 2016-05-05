@@ -1,4 +1,5 @@
 from sqlalchemy import func
+from sqlalchemy.dialects import postgresql
 
 from flaskapp import db
 
@@ -17,7 +18,7 @@ class Restroom(db.Model):
     lng = db.Column(db.Float)
 
     review = db.relationship('Review')
-    images_url = db.Column(db.String)
+    images_url = db.Column(postgresql.ARRAY(db.String))
 
     @property
     def average_rating(self):

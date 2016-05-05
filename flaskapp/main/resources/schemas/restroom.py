@@ -18,7 +18,8 @@ class RestroomSchema(Schema):
     reviewCount = fields.Integer(attribute='review_count')
     lat = fields.Float()
     lng = fields.Float()
-    imagesUrl = fields.String(allow_none=True, attribute='images_url')
+    imagesUrl = fields.Raw(allow_none=True, attribute='images_url')
+    # fields.String(allow_none=True, attribute='images_url')
 
     # this is actually a nested class
     review = fields.List(fields.Nested(ReviewSchema))
@@ -35,7 +36,7 @@ class RestroomSchema(Schema):
         else:
             restroom = Restroom()
 
-        copy_keys = ['name', 'address', 'lat', 'lng', 'images_url']
+        copy_keys = ['name', 'address', 'lat', 'lng']
 
         copy_dict_values_to_object_attrs(copy_keys, item, restroom)
 

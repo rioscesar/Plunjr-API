@@ -1,3 +1,5 @@
+import copy
+
 from flask import request
 from flask_restful import Resource, abort, reqparse
 from sqlalchemy import func, text
@@ -37,15 +39,10 @@ class RestroomsAPI(Resource):
             q = self.get_restrooms_near_me(q, lat, lng, radius)
             logger.info('Nothing wrong, about to get all restrooms in this radius')
             restrooms = q.all()
-
-            if restrooms:
-                logger.info('SUCCESS!')
-                return RestroomSchema(many=True).dump(restrooms).data
-            else:
-                logger.info('Nothing found!')
-                abort(app.config['NOT_FOUND'], message=app.config['RESTROOM_NOT_FOUND'])
         except(DataError, NoResultFound):
-            abort(app.config['NOT_FOUND'], message=app.config['RESTROOM_NOT_FOUND'])
+            return []
+
+        return RestroomSchema(many=True).dump(restrooms).data
 
     def get_restrooms_near_me(self, q, lat, lng, radius_in_meters):
         logger.info('GET_RESTROOMS_NEAR_ME')
@@ -65,17 +62,19 @@ class RestroomAPI(Resource):
     def get(self, id):
         try:
             restroom = Restroom.query.get(id)
-            if restroom:
-                return RestroomSchema().dump(restroom).data
-            else:
-                abort(app.config['NOT_FOUND'], message=app.config['RESTROOM_NOT_FOUND'])
         except(DataError, NoResultFound):
             abort(app.config['NOT_FOUND'], message=app.config['RESTROOM_NOT_FOUND'])
+
+        return RestroomSchema().dump(restroom).data
 
     def patch(self, id):
         try:
             request.json['id'] = id
-            rr = RestroomSchema(partial=True).load(request.json).data
+            rr = RestroomSchema(partial=True, exclude=('imagesUrl',)).load(request.json).data
+            if request.json['imagesUrl']:
+                image_array = copy.deepcopy(rr.images_url)
+                image_array += request.json['imagesUrl']
+                rr.images_url = image_array
             db.session.add(rr)
             db.session.commit()
             return RestroomSchema().dump(rr).data

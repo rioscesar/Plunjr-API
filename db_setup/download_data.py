@@ -30,12 +30,15 @@ def get_all_refugerestrooms():
         for response in responses:
             if response['longitude'] and response['latitude']\
                     and response['street'] and response['city'] and response['state']:
+                rating = ((response['upvote'] * 5) + response['downvote']) / \
+                         ((response['upvote'] + response['downvote']) + (1
+                          if (response['upvote'] + response['downvote']) == 0 else 0))
                 payload = {
                     'lat': response['latitude'],
                     'lng': response['longitude'],
                     'name': response['name'],
                     'address': response['street'] + ', ' + response['city'] + ', ' + response['state'],
-                    'rating': response['upvote'] if 5 <= response['upvote'] >= 1 else 3,
+                    'rating': rating if rating > 0 else 3,
                     'description': response['comment'],
                     'title': response['directions'],
                     'user': 'Anonymous'
@@ -47,6 +50,6 @@ if __name__ == '__main__':
     # get_all_refugerestrooms()
     headers = {'content-type': 'application/json'}
     payload = {
-        'imagesUrl': 'wwww.website.com'
+        'imagesUrl': ['wwww.asdf.com']
     }
     requests.patch('http://127.0.0.1:8000/api/restrooms/1', data=json.dumps(payload), headers=headers)

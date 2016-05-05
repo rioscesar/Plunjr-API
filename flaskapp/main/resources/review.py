@@ -21,12 +21,10 @@ class ReviewsAPI(Resource):
 
             reviews = q.all()
 
-            if reviews:
-                return ReviewSchema(many=True).dump(reviews).data
-            else:
-                abort(app.config['NOT_FOUND'], message=app.config['REVIEW_NOT_FOUND'])
         except(DataError, NoResultFound):
-            abort(app.config['NOT_FOUND'], message=app.config['REVIEW_NOT_FOUND'])
+            return []
+
+        return ReviewSchema(many=True).dump(reviews).data
 
 
 class ReviewAPI(Resource):
@@ -35,12 +33,10 @@ class ReviewAPI(Resource):
     def get(self, id):
         try:
             review = Review.query.get(id)
-            if review:
-                return ReviewSchema().dump(review).data
-            else:
-                abort(app.config['NOT_FOUND'], message=app.config['REVIEW_NOT_FOUND'])
         except(DataError, NoResultFound):
             abort(app.config['NOT_FOUND'], message=app.config['REVIEW_NOT_FOUND'])
+
+        return ReviewSchema().dump(review).data
 
 
 class RestroomReviewAPI(Resource):
