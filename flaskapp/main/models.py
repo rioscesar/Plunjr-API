@@ -18,7 +18,7 @@ class Restroom(db.Model):
     lng = db.Column(db.Float)
 
     review = db.relationship('Review')
-    images_url = db.Column(postgresql.ARRAY(db.String))
+    images_url = db.Column(postgresql.ARRAY(db.String), default=[])
 
     @property
     def average_rating(self):
