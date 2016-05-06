@@ -43,13 +43,15 @@ def get_all_refugerestrooms():
                     'title': response['directions'],
                     'user': 'Anonymous'
                 }
-                requests.post('http://127.0.0.1:8000/api/reviews/', json=payload)
+                requests.post('http://104.130.132.153//api/reviews/', json=payload)
         page += 1
 
 if __name__ == '__main__':
     # get_all_refugerestrooms()
     headers = {'content-type': 'application/json'}
     payload = {
-        'imagesUrl': ['wwww.asdf.com']
+        'imagesUrl': ['http://vignette2.wikia.nocookie.net/runescape2/images/1/14/Old_School_HUD.png']
     }
-    requests.patch('http://127.0.0.1:8000/api/restrooms/1', data=json.dumps(payload), headers=headers)
+    # requests.patch('http://104.130.132.153/api/restrooms/1', data=json.dumps(payload), headers=headers)
+    response = requests.patch('http://127.0.0.1:8000/api/restrooms/3', data=json.dumps(payload), headers=headers)
+    a = response.status_code

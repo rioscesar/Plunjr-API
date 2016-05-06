@@ -68,6 +68,7 @@ class RestroomAPI(Resource):
         return RestroomSchema().dump(restroom).data
 
     def patch(self, id):
+        logger.info('Inside PATCH')
         try:
             request.json['id'] = id
             rr, errors = RestroomSchema(partial=True, exclude=('imagesUrl',)).load(request.json)
