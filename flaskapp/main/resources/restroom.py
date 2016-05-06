@@ -62,10 +62,12 @@ class RestroomAPI(Resource):
     def get(self, id):
         try:
             restroom = Restroom.query.get(id)
+            if restroom:
+                return RestroomSchema().dump(restroom).data
         except(DataError, NoResultFound):
             abort(app.config['NOT_FOUND'], message=app.config['RESTROOM_NOT_FOUND'])
 
-        return RestroomSchema().dump(restroom).data
+        return []
 
     def patch(self, id):
         logger.info('Inside PATCH')
