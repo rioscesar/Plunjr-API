@@ -8,7 +8,7 @@ manager.add_command("runserver", Server(port=8000))
 import logging.config
 
 # load the logging configuration
-logging.config.fileConfig('logging.ini', disable_existing_loggers=True)
+logging.config.fileConfig('logging.ini', disable_existing_loggers=False)
 
 @manager.command
 def rebuild_database():
