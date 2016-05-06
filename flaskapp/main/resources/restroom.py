@@ -1,6 +1,6 @@
 import copy
 
-from flask import request
+from flask import request, jsonify
 from flask_restful import Resource, abort, reqparse
 from sqlalchemy import func, text
 from sqlalchemy.exc import DataError
@@ -39,7 +39,7 @@ class RestroomsAPI(Resource):
             q = self.get_restrooms_near_me(q, lat, lng, radius)
             logger.info('Nothing wrong, about to get all restrooms in this radius')
             restrooms = q.all()
-        except(DataError, NoResultFound):
+        except(DataError, NoResultFound, Exception) as e: #
             return []
 
         return RestroomSchema(many=True).dump(restrooms).data
@@ -70,13 +70,18 @@ class RestroomAPI(Resource):
     def patch(self, id):
         try:
             request.json['id'] = id
-            rr = RestroomSchema(partial=True, exclude=('imagesUrl',)).load(request.json).data
+            rr, errors = RestroomSchema(partial=True, exclude=('imagesUrl',)).load(request.json)
+            logger.info('restroom just got loaded')
+            if errors:
+                logger.info('There was an error')
+                abort(app.config['UNPROCESSABLE_ENTITY'], message=jsonify(errors))
             if request.json['imagesUrl']:
                 image_array = copy.deepcopy(rr.images_url)
                 image_array += request.json['imagesUrl']
                 rr.images_url = image_array
             db.session.add(rr)
             db.session.commit()
+            logger.info('images got commited')
             return RestroomSchema().dump(rr).data
         except(DataError, NoResultFound):
             abort(app.config['NOT_FOUND'], message=app.config['RESTROOM_NOT_FOUND'])
