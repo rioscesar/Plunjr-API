@@ -1,5 +1,5 @@
-import csv
 import os
+import csv
 
 from sqlalchemy.exc import SQLAlchemyError
 
